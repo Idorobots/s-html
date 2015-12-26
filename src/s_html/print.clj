@@ -6,9 +6,9 @@
 
 (defn- value->str [val]
   (if (list? val)
-    (apply str (map (comp (partial str " ")
-                          value->str)
-                    val))
+    (reduce (fn [a b]
+              (str a " " b))
+            (map value->str val))
     (name val)))
 
 (defn- attrs->str [attrs]
