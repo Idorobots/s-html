@@ -1,8 +1,14 @@
 (ns s-html.tags)
 
+(defn doctype? [{:keys [type]}]
+  (= type ::doctype))
+
 (defn doctype [type]
   {:type ::doctype
    :doctype type})
+
+(defn tag? [{:keys [type]}]
+  (= type ::tag))
 
 (defn tag [name & attrs-or-contents]
   (cond (nil? attrs-or-contents)
