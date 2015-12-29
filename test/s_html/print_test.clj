@@ -19,3 +19,8 @@
          "<div>Test</div>"))
   (is (= (html->str (t/span {:class '(:a :b)}))
          "<span class=\"a b\"></span>")))
+
+(deftest void-tags-are-properly-terminated
+  (is (= (html->str (t/br)) "<br />"))
+  (is (= (html->str (t/img {:src "test.png"}))
+         "<img src=\"test.png\" />")))
