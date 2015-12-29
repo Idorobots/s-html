@@ -52,6 +52,7 @@
 (defmacro defemptytags [tags]
   `(do ~@(map (partial make-tag empty-tag) tags)))
 
+;; HTML tags:
 (deftags
   [a abbr acronym address applet b bdo big blockquote body body button caption center cite code
    colgroup dd del dfn dir div dl dt em fieldset font form frame frameset h1 h2 h3 h4 h5 h6 head
@@ -61,3 +62,11 @@
 
 (defemptytags
   [area base basefont br col hr img input isindex link meta param])
+
+;; HTML5 tags:
+(deftags
+  [article aside audio bdi canvas datalist details dialog figcaption figure footer header main
+   mark menuitem meter nav output progress rp rt ruby section summary svg time video])
+
+(defemptytags
+  [embed keygen source track wbr])
