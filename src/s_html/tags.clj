@@ -7,8 +7,12 @@
   {:type ::doctype
    :doctype type})
 
-(defn tag? [{:keys [type]}]
-  (= type ::tag))
+(defn void-tag? [{:keys [type]}]
+  (= type ::void-tag))
+
+(defn tag? [{:keys [type] :as tag}]
+  (or (= type ::tag)
+      (void-tag? tag)))
 
 (defn tag [name & attrs-or-contents]
   (let [f (first attrs-or-contents)]
@@ -32,10 +36,12 @@
 
 (defn void-tag
   ([name attrs]
-   (tag name attrs))
+   {:type ::void-tag
+    :tag name
+    :attrs attrs})
 
   ([name]
-   (tag name)))
+   (void-tag name {})))
 
 (defn make-tag [constructor name]
   `(def ~name (partial ~constructor '~name)))
