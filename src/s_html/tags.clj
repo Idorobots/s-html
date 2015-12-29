@@ -30,7 +30,7 @@
            :attrs {}
            :contents attrs-or-contents})))
 
-(defn empty-tag
+(defn void-tag
   ([name attrs]
    (tag name attrs))
 
@@ -43,14 +43,14 @@
 (defmacro deftag [name]
   (make-tag tag name))
 
-(defmacro defemptytag [name]
-  (make-tag empty-tag name))
+(defmacro defvoidtag [name]
+  (make-tag void-tag name))
 
 (defmacro deftags [tags]
   `(do ~@(map (partial make-tag tag) tags)))
 
-(defmacro defemptytags [tags]
-  `(do ~@(map (partial make-tag empty-tag) tags)))
+(defmacro defvoidtags [tags]
+  `(do ~@(map (partial make-tag void-tag) tags)))
 
 ;; HTML tags:
 (deftags
@@ -60,7 +60,7 @@
    s samp script select small span strike strong style sub sup table tbody td textarea tfoot th
    thead title tr tt u var])
 
-(defemptytags
+(defvoidtags
   [area base basefont br col hr img input isindex link meta param])
 
 ;; HTML5 tags:
@@ -68,5 +68,5 @@
   [article aside audio bdi canvas datalist details dialog figcaption figure footer header main
    mark menuitem meter nav output progress rp rt ruby section summary svg time video])
 
-(defemptytags
+(defvoidtags
   [embed keygen source track wbr])
