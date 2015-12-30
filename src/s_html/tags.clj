@@ -2,7 +2,7 @@
 
 (defn doctype? [obj]
   (and (map? obj)
-       (-> obj :type (= ::doctype))))
+       (= (:type obj) ::doctype)))
 
 (defn doctype [type]
   {:type ::doctype
@@ -10,11 +10,11 @@
 
 (defn void-tag? [obj]
   (and (map? obj)
-       (-> obj :type (= ::void-tag))))
+       (= (:type obj) ::void-tag)))
 
 (defn tag? [obj]
   (and (map? obj)
-       (or (-> obj :type (= ::tag))
+       (or (= (:type obj) ::tag)
            (void-tag? obj))))
 
 (defn tag [name & attrs-or-contents]
@@ -63,7 +63,7 @@
 
 ;; HTML tags:
 (deftags
-  [a abbr acronym address applet b bdo big blockquote body body button caption center cite code
+  [a abbr acronym address applet b bdo big blockquote body button caption center cite code
    colgroup dd del dfn dir div dl dt em fieldset font form frame frameset h1 h2 h3 h4 h5 h6 head
    html i iframe ins kbd label legend li menu noframe noscript object ol optgroup option p pre q
    s samp script select small span strike strong style sub sup table tbody td textarea tfoot th
