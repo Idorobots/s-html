@@ -31,10 +31,7 @@
          "<" (name tag) (attrs->str attrs) " />"))
 
 (defn html->str [html]
-  (cond (list? html)
-        (apply str (map html->str html))
-
-        (doctype? html)
+  (cond (doctype? html)
         (doctype->str html)
 
         (void-tag? html)
@@ -42,6 +39,9 @@
 
         (tag? html)
         (tag->str html)
+
+        (sequential? html)
+        (apply str (map html->str html))
 
         :else
         (str html)))
