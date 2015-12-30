@@ -32,5 +32,14 @@
          "<div><h1>Hi!</h1><h2>Hi!</h2></div>"))
   (is (= (html->str (t/div [(t/h1 "Hi!") (t/h2 "Hi!")] (t/h3 "Hi!")))
          "<div><h1>Hi!</h1><h2>Hi!</h2><h3>Hi!</h3></div>"))
-  (is (= (html->str (t/div (map #(% "Hi!") [t/h1 t/h2]))) ;; FIXME Odd-numbered seqs bug-out.
+  (is (= (html->str (t/div (map #(% "Hi!") [t/h1 t/h2])))
          "<div><h1>Hi!</h1><h2>Hi!</h2></div>")))
+
+(deftest odd-numbered-seqs-properly-work
+  ;; NOTE Courtesy of Clojure: ((fn [{:keys [k]}] k) [1 2])) works properly,
+  ;; NOTE while ((fn [{:keys [k]}] k) [1 2 3]) does not, so using destructuring
+  ;; NOTE when processing nested datastructures is a no-no.
+  (is (= (html->str (t/div (map #(% "Hi!") [t/h1 t/h2 t/h3])))
+         "<div><h1>Hi!</h1><h2>Hi!</h2><h3>Hi!</h3></div>"))
+  (is (= (html->str (t/div [(t/h1 "Hi!") (t/h2 "Hi!") (t/h3 "Hi!")]))
+         "<div><h1>Hi!</h1><h2>Hi!</h2><h3>Hi!</h3></div>")))
