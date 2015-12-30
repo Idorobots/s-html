@@ -1,18 +1,21 @@
 (ns s-html.tags)
 
-(defn doctype? [{:keys [type]}]
-  (= type ::doctype))
+(defn doctype? [obj]
+  (and (map? obj)
+       (-> obj :type (= ::doctype))))
 
 (defn doctype [type]
   {:type ::doctype
    :doctype type})
 
-(defn void-tag? [{:keys [type]}]
-  (= type ::void-tag))
+(defn void-tag? [obj]
+  (and (map? obj)
+       (-> obj :type (= ::void-tag))))
 
-(defn tag? [{:keys [type] :as tag}]
-  (or (= type ::tag)
-      (void-tag? tag)))
+(defn tag? [obj]
+  (and (map? obj)
+       (or (-> obj :type (= ::tag))
+           (void-tag? obj))))
 
 (defn tag [name & attrs-or-contents]
   (let [f (first attrs-or-contents)]
