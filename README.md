@@ -8,15 +8,16 @@ Use provided functions to compose HTML documents:
 
 
 ``` clojure
-(defn hello-world-body ()
-  (div {:class :container)
-       (h1 "Hello world!")))
+(defn hello-world-div [tag]
+  (div {:class :container}
+       (tag "Hello world!")))
 
-(defn hello-world (title-str)
+(defn hello-world [title-str]
   (html (head (title title-str)
-        (body (hello-world-body))))
+        (body (map hello-world-div
+                   [h1 h2 h3 h4 h5 h6])))))
 
-(str (hello-world "Hi!"))
+(html->str (hello-world "Hi!"))
 ```
 
 ## License
