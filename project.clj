@@ -3,4 +3,7 @@
   :url "https://github.com/Idorobots/s-html"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.6.0"]])
+  :dependencies [[org.clojure/clojure "1.6.0"]]
+  :plugins [[jonase/eastwood "0.1.5"]
+            [lein-ancient "0.5.4"]
+            [lein-cloverage "1.0.2"]])
