@@ -1,4 +1,4 @@
-# s-html [![Build Status](https://travis-ci.org/Idorobots/s-html.svg?branch=master)](https://travis-ci.org/Idorobots/s-html)
+# s-html [![Build Status](https://travis-ci.org/Idorobots/s-html.svg?branch=master)](https://travis-ci.org/Idorobots/s-html) [![Clojars Project](https://img.shields.io/clojars/v/s-html.svg)](https://clojars.org/s-html)
 
 A library of composabe, S-expression-based HTML generators.
 
