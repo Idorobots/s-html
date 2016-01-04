@@ -15,7 +15,7 @@
   (apply str
          (map (fn [[n v]]
                 (format " %s=\"%s\"" (name n) (value->str v)))
-              (seq attrs))))
+              (sort (seq attrs)))))
 
 (declare html->str)
 
