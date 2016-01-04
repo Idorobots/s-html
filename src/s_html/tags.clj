@@ -67,7 +67,7 @@
    colgroup dd del dfn dir div dl dt em fieldset font form frame frameset h1 h2 h3 h4 h5 h6 head
    html i iframe ins kbd label legend li menu noframe noscript object ol optgroup option p pre q
    s samp script select small span strike strong style sub sup table tbody td textarea tfoot th
-   thead title tr tt u var])
+   thead title tr tt u ul var])
 
 (defvoidtags
   [area base basefont br col hr img input isindex link meta param])
