@@ -1,5 +1,21 @@
 (ns s-html.print
-  (:require [s-html.tags :refer [doctype? tag? void-tag?]]))
+  (:require [s-html.tags :refer [doctype? tag? void-tag? xml?]]))
+
+(defn- value->str [val]
+  (if (list? val)
+    (reduce (fn [a b]
+              (str a " " b))
+            (map value->str val))
+    (name val)))
+
+(defn- attrs->str [attrs]
+  (apply str
+         (map (fn [[n v]]
+                (format " %s=\"%s\"" (name n) (value->str v)))
+              (sort (seq attrs)))))
+
+(defn- xml->str [{:keys [attrs]}]
+  (format "<?xml%s ?>" (attrs->str attrs)))
 
 (defn- doctype->str [{:keys [doctype]}]
   (let [html "<!DOCTYPE html>"]
@@ -40,19 +56,6 @@
                                  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd")
       (format "<!DOCTYPE %s>\n" (name doctype)))))
 
-(defn- value->str [val]
-  (if (list? val)
-    (reduce (fn [a b]
-              (str a " " b))
-            (map value->str val))
-    (name val)))
-
-(defn- attrs->str [attrs]
-  (apply str
-         (map (fn [[n v]]
-                (format " %s=\"%s\"" (name n) (value->str v)))
-              (sort (seq attrs)))))
-
 (declare html->str)
 
 (defn- tag->str [{:keys [attrs contents tag]}]
@@ -67,7 +70,10 @@
          "<" (name tag) (attrs->str attrs) " />"))
 
 (defn html->str [html]
-  (cond (doctype? html)
+  (cond (xml? html)
+        (xml->str html)
+
+        (doctype? html)
         (doctype->str html)
 
         (void-tag? html)
