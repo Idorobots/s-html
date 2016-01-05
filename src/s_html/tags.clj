@@ -1,5 +1,16 @@
 (ns s-html.tags)
 
+(defn xml? [obj]
+  (and (map? obj)
+       (= (:type obj) ::xml)))
+
+(defn xml
+  ([] (xml {:version "1.0"
+            :encoding "UTF-8"}))
+  ([attrs]
+   {:type ::xml
+    :attrs attrs}))
+
 (defn doctype? [obj]
   (and (map? obj)
        (= (:type obj) ::doctype)))
