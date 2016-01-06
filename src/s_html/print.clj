@@ -14,8 +14,11 @@
                 (format " %s=\"%s\"" (name n) (value->str v)))
               (sort (seq attrs)))))
 
-(defn- xml->str [{:keys [attrs]}]
-  (format "<?xml%s ?>" (attrs->str attrs)))
+(defn- xml->str [{:keys [attrs encoding version]}]
+  (format "<?xml%s%s%s ?>"
+          (if version (str " version=\"" version "\"") "")
+          (if encoding (str " encoding=\"" encoding "\"") "")
+          (attrs->str attrs)))
 
 (defn- doctype->str [{:keys [doctype]}]
   (let [html "<!DOCTYPE html>"]

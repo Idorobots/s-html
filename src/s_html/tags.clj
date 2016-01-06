@@ -5,11 +5,14 @@
        (= (:type obj) ::xml)))
 
 (defn xml
-  ([] (xml {:version "1.0"
-            :encoding "UTF-8"}))
-  ([attrs]
+  ([] (xml {}))
+  ([{:keys [encoding version] :as attrs}]
    {:type ::xml
-    :attrs attrs}))
+    :attrs (dissoc attrs
+                   :encoding
+                   :version)
+    :encoding (or encoding "UTF-8")
+    :version (or version "1.0")}))
 
 (defn doctype? [obj]
   (and (map? obj)
