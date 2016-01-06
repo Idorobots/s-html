@@ -1,4 +1,5 @@
-(ns s-html.tags)
+(ns s-html.tags
+  (:refer-clojure :exclude [meta time])) ;; NOTE Redefining these below.
 
 (defn xml? [obj]
   (and (map? obj)
