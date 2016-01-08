@@ -2,9 +2,8 @@
   (:require [s-html.tags :refer [doctype? tag? void-tag? xml?]]))
 
 (defn- value->str [val]
-  (if (list? val)
-    (reduce (fn [a b]
-              (str a " " b))
+  (if (sequential? val)
+    (reduce #(str %1 " " %2)
             (map value->str val))
     (name val)))
 

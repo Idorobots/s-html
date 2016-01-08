@@ -50,3 +50,13 @@
          "<div><h1>Hi!</h1><h2>Hi!</h2><h3>Hi!</h3></div>"))
   (is (= (html->str (t/div [(t/h1 "Hi!") (t/h2 "Hi!") (t/h3 "Hi!")]))
          "<div><h1>Hi!</h1><h2>Hi!</h2><h3>Hi!</h3></div>")))
+
+(deftest attribute-values-can-be-sequential
+  (is (= (html->str (t/div {:class [:a]}))
+         "<div class=\"a\"></div>"))
+  (is (= (html->str (t/div {:class [:a :b]}))
+         "<div class=\"a b\"></div>"))
+  (is (= (html->str (t/div {:class (list :a :b)}))
+         "<div class=\"a b\"></div>"))
+  (is (= (html->str (t/div {:class (map #(name %) [:a :b :c])}))
+         "<div class=\"a b c\"></div>")))
