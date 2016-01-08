@@ -60,3 +60,19 @@
          "<div class=\"a b\"></div>"))
   (is (= (html->str (t/div {:class (map #(name %) [:a :b :c])}))
          "<div class=\"a b c\"></div>")))
+
+(deftest attribute-values-can-be-numbers
+  (is (= (html->str (t/div {:class 23}))
+         "<div class=\"23\"></div>"))
+  (is (= (html->str (t/div {:class 0.9}))
+         "<div class=\"0.9\"></div>")))
+
+(deftest attributes-can-have-no-value
+  (is (= (html->str (t/div {:class nil}))
+         "<div class></div>"))
+  (is (= (html->str (t/div {:class ""}))
+         "<div class></div>"))
+  (is (= (html->str (t/div {:class []}))
+         "<div class></div>"))
+  (is (= (html->str (t/div {:class (list)}))
+         "<div class></div>")))
