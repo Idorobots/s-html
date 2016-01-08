@@ -2,16 +2,30 @@
   (:require [s-html.tags :refer [doctype? tag? void-tag? xml?]]))
 
 (defn- value->str [val]
-  (if (list? val)
-    (reduce (fn [a b]
-              (str a " " b))
-            (map value->str val))
-    (name val)))
+  (cond (string? val)
+        (when-not (empty? val)
+          val)
+
+        (sequential? val)
+        (when-not (empty? val)
+          (reduce #(str %1 " " %2)
+                  (map value->str val)))
+
+        (keyword? val)
+        (name val)
+
+        (nil? val)
+        nil
+
+        :else
+        (str val)))
 
 (defn- attrs->str [attrs]
   (apply str
          (map (fn [[n v]]
-                (format " %s=\"%s\"" (name n) (value->str v)))
+                (if-let [vs (value->str v)]
+                  (format " %s=\"%s\"" (name n) vs)
+                  (format " %s" (name n))))
               (sort (seq attrs)))))
 
 (defn- xml->str [{:keys [attrs encoding version]}]
