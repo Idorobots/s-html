@@ -77,10 +77,9 @@
    (void-tag name {})))
 
 (defn- make-tag [constructor docstring name]
-  `(defn ~name
+  `(def ~name
      ~docstring
-     [& args#]
-     (apply ~constructor '~name args#)))
+     (partial ~constructor '~name)))
 
 (defmacro ^:private make-docstring [constructor name]
   `(format "Creates an HTML `%s` tag. Accepts the same arguments as [[%s]] except `name`."
