@@ -1,4 +1,4 @@
-(defproject s-html "0.1.6"
+(defproject s-html "0.2.0"
   :description "A library of composable HTML generators."
   :url "https://github.com/Idorobots/s-html"
   :license {:name "Eclipse Public License"
@@ -6,4 +6,7 @@
   :dependencies [[org.clojure/clojure "1.6.0"]]
   :plugins [[jonase/eastwood "0.1.5"]
             [lein-ancient "0.5.4"]
-            [lein-cloverage "1.0.2"]])
+            [lein-cloverage "1.0.2"]
+            [lein-codox "0.9.1"]]
+  :codox {:metadata {:doc/format :markdown}
+          :source-uri "https://github.com/Idorobots/s-html/blob/{version}/{filepath}#L{line}"})
