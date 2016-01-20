@@ -61,7 +61,7 @@
   ([name]
    (void-tag name {})))
 
-(defn make-tag [constructor name]
+(defn- make-tag [constructor name]
   `(def ~name (partial ~constructor '~name)))
 
 (defmacro deftag [name]
