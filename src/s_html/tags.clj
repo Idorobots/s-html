@@ -1,4 +1,5 @@
 (ns s-html.tags
+  "Namespace containing all HTML tag definitions."
   (:refer-clojure :exclude [meta time])) ;; NOTE Redefining these below.
 
 (defn xml?

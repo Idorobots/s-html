@@ -1,4 +1,5 @@
 (ns s-html.print
+  "Namespace containing the HTML printer."
   (:require [s-html.tags :refer [doctype? tag? void-tag? xml?]]))
 
 (defn- value->str [val]
