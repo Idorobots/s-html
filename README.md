@@ -1,6 +1,6 @@
 # s-html [![Build Status](https://travis-ci.org/Idorobots/s-html.svg?branch=master)](https://travis-ci.org/Idorobots/s-html) [![Clojars Project](https://img.shields.io/clojars/v/s-html.svg)](https://clojars.org/s-html)
 
-A library of composabe, S-expression-based HTML generators.
+A library of composable, S-expression-based HTML generators.
 
 ## Usage
 
@@ -27,7 +27,7 @@ A library of composabe, S-expression-based HTML generators.
 
 ## License
 
-Copyright © 2015 Kajetan Rzepecki <kajtek@idorobots.org>
+Copyright © 2015-2016 Kajetan Rzepecki <kajtek@idorobots.org>
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
