@@ -75,28 +75,47 @@
   ([name]
    (void-tag name {})))
 
-(defn- make-tag [constructor name]
-  `(def ~name (partial ~constructor '~name)))
+(defn- make-tag [constructor docstring name]
+  `(def ~name
+     ~docstring
+     (partial ~constructor '~name)))
+
+(defmacro ^:private make-docstring [constructor name]
+  `(format "Creates an HTML %s tag accepting optional `attributes` and `contents`. See %s for details."
+           ~name
+           (-> ~constructor var clojure.core/meta :name str)))
 
 (defmacro deftag
   "A helper macro for defining a single HTML tag."
   [name]
-  (make-tag tag name))
+  (make-tag tag
+            (make-docstring tag name)
+            name))
 
 (defmacro defvoidtag
   "A helper macro for defining a single HTML void tag."
   [name]
-  (make-tag void-tag name))
+  (make-tag void-tag
+            (make-docstring void-tag name)
+            name))
 
 (defmacro deftags
   "A helper macro for defining several HTML tags."
   [tags]
-  `(do ~@(map (partial make-tag tag) tags)))
+  `(do ~@(map (fn [name]
+                (make-tag tag
+                          (make-docstring tag name)
+                          name))
+              tags)))
 
 (defmacro defvoidtags
   "A helper macro for defining several HTML void tags."
   [tags]
-  `(do ~@(map (partial make-tag void-tag) tags)))
+  `(do ~@(map (fn [name]
+                (make-tag void-tag
+                          (make-docstring void-tag name)
+                          name))
+              tags)))
 
 ;; HTML tags:
 (deftags
