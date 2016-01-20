@@ -44,7 +44,7 @@
            (void-tag? obj))))
 
 (defn tag
-  "Creates an HTML tag with optional `attributes` and `contents`. Attributes are a non-`tag?` maps passed as the first argument."
+  "Creates an HTML tag with optional `attributes` and `contents`. Attributes are a non-[[tag?]] map passed as the first argument."
   [name & attrs-or-contents]
   (let [f (first attrs-or-contents)]
     (cond (nil? attrs-or-contents)
@@ -82,7 +82,7 @@
      (apply ~constructor '~name args#)))
 
 (defmacro ^:private make-docstring [constructor name]
-  `(format "Creates an HTML %s tag accepting optional `attributes` and `contents`. See %s for details."
+  `(format "Creates an HTML `%s` tag. Accepts the same arguments as [[%s]] except `name`."
            ~name
            (-> ~constructor var clojure.core/meta :name str)))
 
