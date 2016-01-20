@@ -4,7 +4,7 @@ A library of composabe, S-expression-based HTML generators.
 
 ## Usage
 
-Use provided functions to compose HTML documents:
+[API docs.](https://idorobots.github.io/s-html/) Use provided functions to compose HTML documents:
 
 
 ``` clojure
