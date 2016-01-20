@@ -1,11 +1,14 @@
 (ns s-html.tags
   (:refer-clojure :exclude [meta time])) ;; NOTE Redefining these below.
 
-(defn xml? [obj]
+(defn xml?
+  "Checks wether an object is an XML declaration."
+  [obj]
   (and (map? obj)
        (= (:type obj) ::xml)))
 
 (defn xml
+  "Constructs an XML declaration of given `encoding` and `version`. Defaults to `UTF-8` and version `1.0`."
   ([] (xml {}))
   ([{:keys [encoding version] :as attrs}]
    {:type ::xml
@@ -15,24 +18,34 @@
     :encoding (or encoding "UTF-8")
     :version (or version "1.0")}))
 
-(defn doctype? [obj]
+(defn doctype?
+  "Checks wether an object is a DOCTYPE declaration."
+  [obj]
   (and (map? obj)
        (= (:type obj) ::doctype)))
 
-(defn doctype [type]
+(defn doctype
+  "Constructs a DOCTYPE declaration of given `type`."
+  [type]
   {:type ::doctype
    :doctype type})
 
-(defn void-tag? [obj]
+(defn void-tag?
+  "Checks wether an objects is a void HTML tag."
+  [obj]
   (and (map? obj)
        (= (:type obj) ::void-tag)))
 
-(defn tag? [obj]
+(defn tag?
+  "Checks wether an object is an HTML tag."
+  [obj]
   (and (map? obj)
        (or (= (:type obj) ::tag)
            (void-tag? obj))))
 
-(defn tag [name & attrs-or-contents]
+(defn tag
+  "Creates an HTML tag with optional `attributes` and `contents`. Attributes are a non-`tag?` maps passed as the first argument."
+  [name & attrs-or-contents]
   (let [f (first attrs-or-contents)]
     (cond (nil? attrs-or-contents)
           {:type ::tag
@@ -53,6 +66,7 @@
            :contents attrs-or-contents})))
 
 (defn void-tag
+  "Creates a void HTML tag - a tag that cannot have any contents - with optional `attributes`."
   ([name attrs]
    {:type ::void-tag
     :tag name
@@ -64,16 +78,24 @@
 (defn- make-tag [constructor name]
   `(def ~name (partial ~constructor '~name)))
 
-(defmacro deftag [name]
+(defmacro deftag
+  "A helper macro for defining a single HTML tag."
+  [name]
   (make-tag tag name))
 
-(defmacro defvoidtag [name]
+(defmacro defvoidtag
+  "A helper macro for defining a single HTML void tag."
+  [name]
   (make-tag void-tag name))
 
-(defmacro deftags [tags]
+(defmacro deftags
+  "A helper macro for defining several HTML tags."
+  [tags]
   `(do ~@(map (partial make-tag tag) tags)))
 
-(defmacro defvoidtags [tags]
+(defmacro defvoidtags
+  "A helper macro for defining several HTML void tags."
+  [tags]
   `(do ~@(map (partial make-tag void-tag) tags)))
 
 ;; HTML tags:
