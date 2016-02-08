@@ -7,13 +7,13 @@
   (is (= (add-class (i) :hurr)
          (i {:class '(:hurr)})))
   (is (= (add-class (i) :hurr :durr)
-         (i {:class '(:hurr :durr)})))
+         (i {:class '(:durr :hurr)})))
   (is (= (add-class (i {:class :herp}) :hurr)
          (i {:class '(:herp :hurr)})))
   (is (= (add-class (i {:class [:herp :derp]}) :hurr)
-         (i {:class [:herp :derp :hurr]})))
+         (i {:class '(:derp :herp :hurr)})))
   (is (= (add-class (i {:class [:herp :derp]}) :hurr :durr)
-         (i {:class '(:herp :derp :hurr :durr)}))))
+         (i {:class '(:derp :durr :herp :hurr)}))))
 
 (deftest can-remove-a-class
   (is (= (remove-class (i) :hurr)

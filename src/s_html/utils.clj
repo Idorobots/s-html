@@ -1,17 +1,21 @@
 (ns s-html.utils
-  "Useful utilities for handling S-HTML datastructures.")
+  "Useful utilities for handling S-HTML datastructures."
+  (:require [clojure.set :refer [union]]))
 
-(defn- join-values [a b]
-  (cond (nil? a) b
-        (nil? b) a
-        (and (sequential? a) (sequential? b)) (concat a b)
-        (sequential? a) (conj a b)
-        (sequential? b) (conj b a)
-        :else (list a b)))
+(defn- settify [value]
+  (cond (nil? value) #{}
+        (coll? value) (into #{} value)
+        :else #{value}))
+
+(defn- union-values [a b]
+  (-> (union (settify a)
+             (settify b))
+      seq
+      sort))
 
 (defn- add-attr [{:keys [attrs] :as tag} attribute value]
   (update-in tag [:attrs attribute]
-             #(join-values % value)))
+             #(union-values % value)))
 
 (defn- dissoc-in [m [k & ks]]
   (if ks
