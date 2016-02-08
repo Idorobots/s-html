@@ -1,6 +1,6 @@
 (ns s-html.utils
   "Useful utilities for handling S-HTML datastructures."
-  (:require [clojure.set :refer [union]]))
+  (:require [clojure.set :refer [difference union]]))
 
 (defn- settify [value]
   (cond (nil? value) #{}
@@ -17,24 +17,23 @@
   (update-in tag [:attrs attribute]
              #(union-values % value)))
 
+(defn- diff-values [a b]
+  (-> (difference (settify a)
+                  (settify b))
+      seq
+      sort))
+
 (defn- dissoc-in [m [k & ks]]
   (if ks
     (assoc m k (dissoc-in (m k) ks))
     (dissoc m k)))
 
 (defn- remove-attr [tag attribute value]
-  (let [a (get-in tag [:attrs attribute])]
-    (cond (= value a)
-          (dissoc-in tag [:attrs attribute])
-
-          (sequential? a)
-          (let [f (filter #(not= value %) a)]
-            (if (empty? f)
-              (dissoc-in tag [:attrs attribute])
-              (assoc-in tag [:attrs attribute] f)))
-
-          :else
-          tag)))
+  (let [a (get-in tag [:attrs attribute])
+        d (diff-values a value)]
+    (if (empty? d)
+      (dissoc-in tag [:attrs attribute])
+      (assoc-in tag [:attrs attribute] d))))
 
 (defn add-class
   "Adds all classes in `cs` to the `tag`'s `:class` attribute."
@@ -44,6 +43,4 @@
 (defn remove-class
   "Removes all classes in `cs` from `tag`'s `:class` attribute."
   [tag & cs]
-  (reduce #(remove-attr %1 :class %2)
-          tag
-          cs))
+  (remove-attr tag :class cs))

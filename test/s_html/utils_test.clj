@@ -27,4 +27,4 @@
   (is (= (remove-class (i {:class [:hurr :durr]}) :hurr)
          (i {:class '(:durr)})))
   (is (= (remove-class (i {:class [:hurr :durr :derp]}) :herp :derp)
-         (i {:class '(:hurr :durr)}))))
+         (i {:class '(:durr :hurr)}))))
