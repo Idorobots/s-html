@@ -1,7 +1,7 @@
 (ns s-html.utils-test
   (:require [clojure.test :refer :all]
             [s-html.tags :refer [i]]
-            [s-html.utils :refer [add-class has-class remove-class]]))
+            [s-html.utils :refer [add-class attr has-class remove-class]]))
 
 (deftest can-add-a-class
   (is (= (add-class (i) :hurr)
@@ -37,3 +37,10 @@
   (is (has-class (i {:class [:hurr :durr]}) :hurr))
   (is (has-class (i {:class [:hurr :durr]}) :hurr :durr))
   (is (has-class (i {:class [:hurr :durr :herp]}) :hurr :herp)))
+
+(deftest can-retrieve-a-class
+  (is (nil? (attr (i) :class)))
+  (is (= (attr (i {:class :hurr}) :class)
+         :hurr))
+  (is (= (attr (i {:class [:herp :derp]}) :class)
+         [:herp :derp])))

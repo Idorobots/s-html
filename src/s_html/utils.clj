@@ -30,10 +30,15 @@
     (assoc m k (dissoc-in (m k) ks))
     (dissoc m k)))
 
+(defn attr
+  "Returns `tags`'s `attribute` value."
+  [tag attribute]
+  (get-in tag [:attrs attribute]))
+
 (defn remove-attr
   "Removes all `values` from `tag`'s `attribute`."
   [tag attribute & values]
-  (let [a (get-in tag [:attrs attribute])
+  (let [a (attr tag attribute)
         d (diff-values a values)]
     (if (empty? d)
       (dissoc-in tag [:attrs attribute])
@@ -42,7 +47,7 @@
 (defn has-attr
   "Checks wether `tag`'s `attribute` contains all `values`."
   [tag attribute & values]
-  (let [a (get-in tag [:attrs attribute])
+  (let [a (attr tag attribute)
         sv (settify values)]
     (= (intersection (settify a) sv)
        sv)))
