@@ -1,6 +1,6 @@
 (ns s-html.utils
   "Useful utilities for handling S-HTML datastructures."
-  (:require [clojure.set :refer [difference union]]))
+  (:require [clojure.set :refer [difference intersection union]]))
 
 (defn- settify [value]
   (cond (nil? value) #{}
@@ -35,6 +35,12 @@
       (dissoc-in tag [:attrs attribute])
       (assoc-in tag [:attrs attribute] d))))
 
+(defn- has-attr [tag attribute value]
+  (let [a (get-in tag [:attrs attribute])
+        sv (settify value)]
+    (= (intersection (settify a) sv)
+       sv)))
+
 (defn add-class
   "Adds all classes in `cs` to the `tag`'s `:class` attribute."
   [tag & cs]
@@ -44,3 +50,8 @@
   "Removes all classes in `cs` from `tag`'s `:class` attribute."
   [tag & cs]
   (remove-attr tag :class cs))
+
+(defn has-class
+  "Checks wether `tag`'s `:class` attribute contains all classes in `cs`."
+  [tag & cs]
+  (has-attr tag :class cs))
