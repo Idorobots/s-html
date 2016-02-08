@@ -52,7 +52,7 @@
           {:type ::tag
            :tag name
            :attrs {}
-           :contents nil}
+           :contents '()}
 
           (and (map? f) (not (tag? f)))
           {:type ::tag
