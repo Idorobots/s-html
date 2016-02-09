@@ -1,22 +1,23 @@
 (ns s-html.print-test
   (:require [clojure.test :refer :all]
-            [s-html.tags :as t]
-            [s-html.print :refer [html->str]]))
+            [s-html.print :refer [html->str]]
+            [s-html.tags :refer [doctype xml]]
+            [s-html.tags.html :as t]))
 
 (deftest can-stringify-html
   (is (= (html->str nil) ""))
   (is (= (html->str (list)) ""))
   (is (= (html->str (t/html)) "<html></html>"))
-  (is (= (html->str (t/doctype :html)) "<!DOCTYPE html>"))
-  (is (= (html->str (t/xml)) "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"))
-  (is (= (html->str (list (t/doctype :html)
+  (is (= (html->str (doctype :html)) "<!DOCTYPE html>"))
+  (is (= (html->str (xml)) "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"))
+  (is (= (html->str (list (doctype :html)
                           (t/html)))
          "<!DOCTYPE html><html></html>"))
-  (is (= (html->str (list (t/xml)
-                          (t/doctype :xhtml)
+  (is (= (html->str (list (xml)
+                          (doctype :xhtml)
                           (t/html)))
          "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><!DOCTYPE html><html></html>"))
-  (is (= (html->str (t/xml {:version "0.9"}))
+  (is (= (html->str (xml {:version "0.9"}))
          "<?xml version=\"0.9\" encoding=\"UTF-8\" ?>"))
   (is (= (html->str (t/div {:class :container}))
          "<div class=\"container\"></div>"))

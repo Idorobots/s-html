@@ -8,21 +8,21 @@ A library of composable, S-expression-based HTML generators.
 
 
 ``` clojure
-(require '[s-html.tags :as t])
+(require '[s-html.tags.html :refer [body div head html h1 h2 h3 h4 h5 h6 title]])
 
-(def container (partial t/div {:class :container}))
+(def container (partial div {:class :container}))
 
 (defn hello-world-div [tag]
   (container (tag "Hello world!")))
 
 (defn hello-world [title-str]
-  (t/html (t/head (t/title title-str)
-          (t/body (map hello-world-div
-                       [t/h1 t/h2 t/h3 t/h4 t/h5 t/h6])))))
+  (html (head (title title-str)
+        (body (map hello-world-div
+              [h1 h2 h3 h4 h5 h6])))))
 
-(require '[s-html.print :as p])
+(require '[s-html.print :refer [html->str]])
 
-(p/html->str (hello-world "Hi!"))
+(html->str (hello-world "Hi!"))
 ```
 
 ## License
