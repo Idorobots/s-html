@@ -1,6 +1,6 @@
 (ns s-html.tags-test
   (:require [clojure.test :refer :all]
-            [s-html.tags :refer [xml?]]
+            [s-html.tags :refer [doctype? xml?]]
             [s-html.tags.html :as html]
             [s-html.tags.atom :as atom]
             [s-html.tags.rss :as rss]
@@ -17,6 +17,10 @@
          (:contents (html/i {:class :class}))))
   (is (= (:contents (html/i "foo"))
          (:contents (html/i {:class :class} "foo")))))
+
+(deftest html-is-well-formed
+  (is (doctype? (first (html/html*))))
+  (is (doctype? (first (html/xhtml)))))
 
 (deftest atom-feed-is-well-formed
   (is (attr (atom/feed) :xmlns))

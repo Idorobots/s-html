@@ -1,7 +1,7 @@
 (ns s-html.tags.html
   "HTML4 & HTML5 tags."
   (:refer-clojure :exclude [meta time])
-  (:require [s-html.tags :refer [deftags defvoidtags]]))
+  (:require [s-html.tags :refer [deftags defvoidtags doctype]]))
 
 ;; HTML4 tags:
 (deftags
@@ -21,3 +21,18 @@
 
 (defvoidtags
   [embed keygen source track wbr])
+
+;; Other useful bindings:
+(defn html5
+  "Creates an HTML5 html tag with preceeding doctype definition. See [[html]] for details."
+  [& attrs-or-contents]
+  [(doctype :html5)
+   (apply html attrs-or-contents)])
+
+(def html* "An alias of [[html5]]." html5)
+
+(defn xhtml
+  "Creates an XHTML 1.1 html tag with preceeding doctype definition. See [[html]] for details."
+  [& attrs-or-contents]
+  [(doctype :xhtml1.1) ;; NOTE For XHTML5 use plain `html5`.
+   (apply html attrs-or-contents)])
