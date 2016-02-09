@@ -1,6 +1,6 @@
 (ns s-html.utils-test
   (:require [clojure.test :refer :all]
-            [s-html.tags :refer [i]]
+            [s-html.tags.html :refer [i]]
             [s-html.utils :refer [add-class attr has-class remove-class]]))
 
 (deftest can-add-a-class
