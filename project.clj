@@ -1,4 +1,4 @@
-(defproject s-html "1.0.0"
+(defproject s-html "1.0.1"
   :description "A library of composable HTML generators."
   :url "https://github.com/Idorobots/s-html"
   :license {:name "Eclipse Public License"

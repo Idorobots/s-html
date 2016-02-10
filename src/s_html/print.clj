@@ -1,5 +1,5 @@
 (ns s-html.print
-  "Namespace containing the HTML printer."
+  "Document printer."
   (:require [s-html.tags :refer [doctype? tag? void-tag? xml?]]))
 
 (defn- value->str [val]
@@ -88,7 +88,7 @@
          "<" (name tag) (attrs->str attrs) " />"))
 
 (defn html->str
-  "Transforms a data structure representing S-HTML HTML into a text string."
+  "Transforms an S-HTML data structure into a text string."
   [html]
   (cond (xml? html)
         (xml->str html)

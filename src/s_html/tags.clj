@@ -8,7 +8,7 @@
        (= (:type obj) ::xml)))
 
 (defn xml
-  "Constructs an XML declaration of given `encoding` and `version`. Defaults to `UTF-8` and version `1.0`."
+  "Constructs an XML declaration of a given `encoding` and `version`. Defaults to `UTF-8` and version `1.0`."
   ([] (xml {}))
   ([{:keys [encoding version] :as attrs}]
    {:type ::xml
@@ -25,26 +25,26 @@
        (= (:type obj) ::doctype)))
 
 (defn doctype
-  "Constructs a DOCTYPE declaration of given `type`."
+  "Constructs a DOCTYPE declaration of a given `type`."
   [type]
   {:type ::doctype
    :doctype type})
 
 (defn void-tag?
-  "Checks wether an objects is a void HTML tag."
+  "Checks wether an objects is a void tag."
   [obj]
   (and (map? obj)
        (= (:type obj) ::void-tag)))
 
 (defn tag?
-  "Checks wether an object is an HTML tag."
+  "Checks wether an object is a tag."
   [obj]
   (and (map? obj)
        (or (= (:type obj) ::tag)
            (void-tag? obj))))
 
 (defn tag
-  "Creates an HTML tag with optional `attributes` and `contents`. Attributes are a non-[[tag?]] map passed as the first argument."
+  "Creates a tag with optional `attributes` and `contents`. Attributes are a non-[[tag?]] map passed as the first argument."
   [name & attrs-or-contents]
   (let [f (first attrs-or-contents)]
     (cond (nil? attrs-or-contents)
@@ -66,7 +66,7 @@
            :contents attrs-or-contents})))
 
 (defn void-tag
-  "Creates a void HTML tag - a tag that cannot have any contents - with optional `attributes`."
+  "Creates a void tag - a tag that cannot have any contents - with optional `attributes`."
   ([name attrs]
    {:type ::void-tag
     :tag name
@@ -81,26 +81,26 @@
      (partial ~constructor '~name)))
 
 (defmacro ^:private make-docstring [constructor name]
-  `(format "Creates an HTML `%s` tag. Accepts the same arguments as [[%s]] except `name`."
+  `(format "Creates a `%s` tag. Accepts the same arguments as [[%s]] except `name`."
            ~name
            (-> ~constructor var clojure.core/meta :name str)))
 
 (defmacro deftag
-  "A helper macro for defining a single HTML tag."
+  "A helper macro for defining a single tag."
   [name]
   (make-tag tag
             (make-docstring tag name)
             name))
 
 (defmacro defvoidtag
-  "A helper macro for defining a single HTML void tag."
+  "A helper macro for defining a single void tag."
   [name]
   (make-tag void-tag
             (make-docstring void-tag name)
             name))
 
 (defmacro deftags
-  "A helper macro for defining several HTML tags."
+  "A helper macro for defining several tags."
   [tags]
   `(do ~@(map (fn [name]
                 (make-tag tag
@@ -109,7 +109,7 @@
               tags)))
 
 (defmacro defvoidtags
-  "A helper macro for defining several HTML void tags."
+  "A helper macro for defining several void tags."
   [tags]
   `(do ~@(map (fn [name]
                 (make-tag void-tag
